@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.tcu.cs.hogwartsartifactsonline.system.Result;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 public class ArtifactController {
 
@@ -27,8 +30,17 @@ public class ArtifactController {
     public Result findArtifactbyId(@PathVariable String artifactId) {
         Artifact foundArtifact = this.artifactService.findById(artifactId);
         ArtifactDto artifactDto = this.artifactToArtifactDtoConverter.convert(foundArtifact);
-
         return new Result(true, StatusCode.SUCCESS,"Find One Success", artifactDto);
+    }
+
+    @GetMapping("/api/v1/artifacts")
+    public Result findAllArtifacts() {
+        List<Artifact> foundArtifacts = this.artifactService.findAll();
+        // convert foundArtifacts to a list of artifactDtos
+        List<ArtifactDto> artifactDtos = foundArtifacts.stream()
+                .map(this.artifactToArtifactDtoConverter::convert)
+                .collect(Collectors.toList());
+    return new Result(true, StatusCode.SUCCESS,"Find All Success", artifactDtos);
     }
 
 }
