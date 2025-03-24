@@ -1,10 +1,10 @@
 package edu.tcu.cs.hogwartsartifactsonline.system;
 
-import org.springframework.boot.CommandLineRunner;
 import edu.tcu.cs.hogwartsartifactsonline.artifact.Artifact;
 import edu.tcu.cs.hogwartsartifactsonline.artifact.ArtifactRepository;
 import edu.tcu.cs.hogwartsartifactsonline.wizard.Wizard;
 import edu.tcu.cs.hogwartsartifactsonline.wizard.WizardRepository;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,6 +13,7 @@ public class DBDataInitializer implements CommandLineRunner {
     private final ArtifactRepository artifactRepository;
 
     private final WizardRepository wizardRepository;
+
 
     public DBDataInitializer(ArtifactRepository artifactRepository, WizardRepository wizardRepository) {
         this.artifactRepository = artifactRepository;
@@ -58,19 +59,16 @@ public class DBDataInitializer implements CommandLineRunner {
         a6.setImageUrl("ImageUrl");
 
         Wizard w1 = new Wizard();
-        w1.setId(1);
         w1.setName("Albus Dumbledore");
         w1.addArtifact(a1);
         w1.addArtifact(a3);
 
         Wizard w2 = new Wizard();
-        w2.setId(2);
         w2.setName("Harry Potter");
         w2.addArtifact(a2);
         w2.addArtifact(a4);
 
         Wizard w3 = new Wizard();
-        w3.setId(3);
         w3.setName("Neville Longbottom");
         w3.addArtifact(a5);
 
@@ -80,4 +78,5 @@ public class DBDataInitializer implements CommandLineRunner {
 
         artifactRepository.save(a6);
     }
+
 }
