@@ -1,6 +1,5 @@
 package edu.tcu.cs.hogwartsartifactsonline.artifact;
 
-
 import edu.tcu.cs.hogwartsartifactsonline.artifact.converter.ArtifactDtoToArtifactConverter;
 import edu.tcu.cs.hogwartsartifactsonline.artifact.converter.ArtifactToArtifactDtoConverter;
 import edu.tcu.cs.hogwartsartifactsonline.artifact.dto.ArtifactDto;
