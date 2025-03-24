@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.*;
@@ -149,5 +150,55 @@ class ArtifactServiceTest {
         verify(artifactRepository, times(1)).save(newArtifact);
 
     }
+
+    @Test
+    void testUpdateSuccess() {
+        //Given
+        Artifact oldArtifact = new Artifact();
+        oldArtifact.setId("1250808601744904192");
+        oldArtifact.setName("Invisibility Cloak");
+        oldArtifact.setDescription("An invisibility cloak is used to make the wearer invisible");
+        oldArtifact.setImageUrl("ImageUrl");
+
+        Artifact update = new Artifact();
+        update.setId("1250808601744904192");
+        update.setName("Invisibility Cloak");
+        update.setDescription("A new description.");
+        update.setImageUrl("ImageUrl");
+
+        given(artifactRepository.findById("1250808601744904192")).willReturn(Optional.of(oldArtifact));
+        given(artifactRepository.save(oldArtifact)).willReturn(oldArtifact);
+
+        //When
+        Artifact updatedArtifact = artifactService.update("1250808601744904192", update);
+
+        //Then
+        assertThat(updatedArtifact.getId()).isEqualTo(update.getId());
+        assertThat(updatedArtifact.getDescription()).isEqualTo(update.getDescription());
+
+        verify(artifactRepository, times(1)).findById("1250808601744904192");
+        verify(artifactRepository, times(1)).save(oldArtifact);
+    }
+
+    @Test
+    void testUpdateNotFound() {
+        //Given
+        Artifact update = new Artifact();
+        update.setName("Invisibility Cloak");
+        update.setDescription("A new description.");
+        update.setImageUrl("ImageUrl");
+
+        given(artifactRepository.findById("1250808601744904192")).willReturn(Optional.empty());
+
+        //When
+        assertThrows(ArtifactNotFoundException.class, ()-> {
+            artifactService.update("1250808601744904192", update);
+        });
+
+        //Then
+        verify(artifactRepository, times(1)).findById("1250808601744904192");
+
+    }
+
 
 }
