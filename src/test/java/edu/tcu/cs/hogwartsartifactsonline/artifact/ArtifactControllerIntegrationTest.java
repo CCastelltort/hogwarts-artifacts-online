@@ -127,9 +127,9 @@ class ArtifactControllerIntegrationTest {
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.INVALID_ARGUMENT))
                 .andExpect(jsonPath("$.message").value("Provided arguments are invalid, see data for details."))
-                .andExpect(jsonPath("$.data.name").value("name is required."))
-                .andExpect(jsonPath("$.data.description").value("description is required."))
-                .andExpect(jsonPath("$.data.imageUrl").value("imageUrl is required."));
+                .andExpect(jsonPath("$.data.name").value("name is required"))
+                .andExpect(jsonPath("$.data.description").value("description is required"))
+                .andExpect(jsonPath("$.data.imageUrl").value("imageUrl is required"));
         this.mockMvc.perform(get(this.baseUrl + "/artifacts").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
@@ -191,9 +191,9 @@ class ArtifactControllerIntegrationTest {
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.INVALID_ARGUMENT))
                 .andExpect(jsonPath("$.message").value("Provided arguments are invalid, see data for details."))
-                .andExpect(jsonPath("$.data.name").value("name is required."))
-                .andExpect(jsonPath("$.data.description").value("description is required."))
-                .andExpect(jsonPath("$.data.imageUrl").value("imageUrl is required."));
+                .andExpect(jsonPath("$.data.name").value("name is required"))
+                .andExpect(jsonPath("$.data.description").value("description is required"))
+                .andExpect(jsonPath("$.data.imageUrl").value("imageUrl is required"));
         this.mockMvc.perform(get(this.baseUrl + "/artifacts/1250808601744904191").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
