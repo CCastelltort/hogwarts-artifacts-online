@@ -79,11 +79,13 @@ public class SecurityConfiguration {
                 .cors(Customizer.withDefaults())
                 .httpBasic(httpBasic -> httpBasic.authenticationEntryPoint(this.customBasicAuthenticationEntryPoint))
                 // Handle OAuth2 JWT authentication properly
-                .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwt -> jwt.jwtAuthenticationConverter(new JwtAuthenticationConverter())) // Configure JWT authentication
-                        .authenticationEntryPoint(this.customBearerTokenAuthenticationEntryPoint) // Custom Entry Point
-                        .accessDeniedHandler(this.customBearerTokenAccessDeniedHandler) // Custom Access Denied Handler
-                )
+                .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer
+                        .jwt(Customizer.withDefaults())
+                        .authenticationEntryPoint(this.customBearerTokenAuthenticationEntryPoint)
+                        .accessDeniedHandler(this.customBearerTokenAccessDeniedHandler))
+                /* Configures the spring boot application as an OAuth2 Resource Server which authenticates all
+                 the incoming requests (except the ones excluded above) using JWT authentication.
+                 */
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
